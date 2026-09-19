@@ -2,7 +2,7 @@ import { useRef } from "react";
 import MovieCard from "./MovieCard";
 import "../styles/Home.css"
 
-function MovieSection({ title, movies, variant = "portrait" }) {
+function MovieSection({ title, movies, onAdd, onDelete, onUpdate,canUpdate, isInMyList }) {
   const movieListRef = useRef(null);
 
   function scrollLeft() {
@@ -30,12 +30,13 @@ function MovieSection({ title, movies, variant = "portrait" }) {
         <div className="movie-list" ref={movieListRef}>
           {movies.map((movie) => (
             <MovieCard
-              key={`${title}-${movie.title}`}
-              image={movie.image}
-              title={movie.title}
-              badge={movie.badge}
-              rating={movie.rating}
-              variant={variant}
+              key={`${title}-${movie.id}`}
+              movie={movie}
+              onAdd={onAdd}
+              onDelete={onDelete}
+              onUpdate={onUpdate}
+              canUpdate={canUpdate ? canUpdate(movie) : true}
+              isInMyList={isInMyList ? isInMyList(movie) : false}
             />
           ))}
         </div>
